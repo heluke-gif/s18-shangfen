@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>S18 自然之力 · 上分手册</title>
+<style>
+  :root {
+    --bg: #f4f7f8;
+    --surface: #ffffff;
+    --ink: #1d2935;
+    --muted: #5d6e7d;
+    --line: #dbe3e9;
+    --teal: #0f7b6c;
+    --teal-soft: #e3f2ee;
+    --blue: #2f6fed;
+    --blue-soft: #e7eeff;
+    --amber: #b7791f;
+    --amber-soft: #fdf3dc;
+    --danger: #c43d3d;
+    --radius: 8px;
+  }
+  * { box-sizing: border-box; letter-spacing: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  header.site {
+    background: #17232e;
+    color: #f4f7f8;
+    padding: 18px 20px;
+  }
+  header.site .inner { max-width: 1080px; margin: 0 auto; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  header.site h1 { margin: 0; font-size: 22px; font-weight: 700; }
+  header.site .tag {
+    background: var(--teal);
+    color: #fff;
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  header.site .note { width: 100%; margin: 6px 0 0; color: #b9c6d0; font-size: 13px; }
+  nav.tabs {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: #fff;
+    border-bottom: 1px solid var(--line);
+    padding: 8px 12px;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+  }
+  nav.tabs a {
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 14px;
+    padding: 6px 12px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    white-space: nowrap;
+    background: var(--bg);
+  }
+  nav.tabs a:hover { border-color: var(--teal); color: var(--teal); }
+  main { max-width: 1080px; margin: 0 auto; padding: 20px 16px 60px; }
+  section { margin: 34px 0; }
+  h2 {
+    font-size: 19px;
+    margin: 0 0 12px;
+    padding-left: 10px;
+    border-left: 4px solid var(--teal);
+    line-height: 1.4;
+  }
+  .sub { color: var(--muted); font-size: 14px; margin: -4px 0 14px; }
+  .grid { display: grid; gap: 12px; }
+  .grid.decide { grid-template-columns: repeat(4, 1fr); }
+  .grid.comps { grid-template-columns: repeat(2, 1fr); }
+  .grid.cold { grid-template-columns: repeat(3, 1fr); }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 14px;
+  }
+  .card.decide { cursor: pointer; }
+  .card.decide:hover { border-color: var(--teal); box-shadow: 0 2px 8px rgba(23,35,46,.08); }
+  .card.decide h3 { margin: 0 0 6px; font-size: 15px; }
+  .card.decide p { margin: 0; font-size: 13px; color: var(--muted); }
+  .card.comp h3 { margin: 0 0 4px; font-size: 17px; }
+  .grade {
+    display: inline-block;
+    min-width: 30px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 13px;
+    border-radius: 6px;
+    padding: 2px 8px;
+    margin-left: 6px;
+    vertical-align: 2px;
+  }
+  .grade.s { background: var(--amber-soft); color: var(--amber); }
+  .grade.a { background: var(--blue-soft); color: var(--blue); }
+  .meta { color: var(--muted); font-size: 13px; margin: 0 0 12px; }
+  .evidence {
+    margin-top: 12px;
+    background: var(--teal-soft);
+    border-left: 3px solid var(--teal);
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+  .block { margin-top: 12px; }
+  .block h4 { margin: 0 0 6px; font-size: 13px; color: var(--teal); text-transform: none; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-size: 12px;
+    padding: 3px 9px;
+    white-space: nowrap;
+  }
+  .chip.item { background: var(--blue-soft); border-color: #c9d8ff; }
+  .chip.hex { background: var(--amber-soft); border-color: #f0e0b8; }
+  .chip.unit { background: var(--teal-soft); border-color: #c4e3da; }
+  ul.tight { margin: 6px 0 0; padding-left: 18px; }
+  ul.tight li { margin: 4px 0; }
+  .codebox {
+    margin-top: 12px;
+    background: #f0f4f6;
+    border: 1px dashed #b9c6d0;
+    border-radius: var(--radius);
+    padding: 10px;
+    font-size: 13px;
+    word-break: break-all;
+  }
+  .codebox .row { display: flex; gap: 8px; align-items: flex-start; margin-top: 6px; }
+  .codebox .row:first-child { margin-top: 0; }
+  .codebox code { flex: 1; color: var(--ink); font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12px; line-height: 1.5; }
+  button {
+    font: inherit;
+    cursor: pointer;
+    border: 1px solid var(--line);
+    background: #fff;
+    color: var(--ink);
+    border-radius: var(--radius);
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+  button.primary { background: var(--teal); border-color: var(--teal); color: #fff; }
+  button.danger { color: var(--danger); }
+  button:hover { filter: brightness(.97); }
+  .tablewrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); min-width: 720px; }
+  th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; font-size: 13px; }
+  th { background: #eef3f5; font-weight: 600; white-space: nowrap; }
+  tr:last-child td { border-bottom: 0; }
+  .rules { counter-reset: rule; }
+  .rule { display: flex; gap: 10px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 10px 12px; margin: 8px 0; }
+  .rule::before {
+    counter-increment: rule;
+    content: counter(rule);
+    flex: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--teal-soft);
+    color: var(--teal);
+    font-weight: 700;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .formgrid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
+  .field { display: flex; flex-direction: column; gap: 4px; }
+  .field.full { grid-column: 1 / -1; }
+  label { font-size: 12px; color: var(--muted); }
+  input, select, textarea {
+    font: inherit;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: #fff;
+    color: var(--ink);
+    padding: 7px 9px;
+    width: 100%;
+  }
+  textarea { resize: vertical; min-height: 52px; }
+  .stats { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+  .stat { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 8px 14px; min-width: 100px; }
+  .stat b { display: block; font-size: 19px; line-height: 1.3; }
+  .stat span { font-size: 12px; color: var(--muted); }
+  .logitem {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 10px 12px;
+    margin: 8px 0;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+  .logitem .main { flex: 1; min-width: 0; }
+  .logitem .title { font-weight: 600; font-size: 14px; }
+  .logitem .detail { font-size: 13px; color: var(--muted); margin-top: 2px; }
+  .empty { color: var(--muted); font-size: 14px; }
+  .badge-rank { display: inline-block; min-width: 30px; text-align: center; border-radius: 6px; padding: 1px 7px; font-weight: 700; font-size: 13px; }
+  .rank-top { background: var(--teal-soft); color: var(--teal); }
+  .rank-mid { background: var(--amber-soft); color: var(--amber); }
+  .rank-low { background: #fbe3e3; color: var(--danger); }
+  .actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+  footer { max-width: 1080px; margin: 0 auto; padding: 0 16px 40px; color: var(--muted); font-size: 13px; }
+  footer a { color: var(--teal); }
+  @media (max-width: 900px) {
+    .grid.decide { grid-template-columns: repeat(2, 1fr); }
+    .grid.comps, .grid.cold { grid-template-columns: 1fr; }
+    .formgrid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 520px) {
+    body { font-size: 14px; }
+    header.site h1 { font-size: 19px; }
+    .grid.decide { grid-template-columns: 1fr; }
+    .formgrid { grid-template-columns: 1fr; }
+    main { padding: 14px 12px 50px; }
+  }
+</style>
+</head>
+<body>
+<header class="site">
+  <div class="inner">
+    <h1>S18 自然之力 · 上分手册</h1>
+    <span class="tag">18.1 版本</span>
+  </div>
+  <div class="inner">
+    <p class="note">数据整理至 2026-08-25。主练两套：荆棘希维尔、永森95EZ；冷门备选三套：84野兽莲华、成双蛇女、无限打钱小炮。新赛季热补频繁，先看最近热补再确认主练。</p>
+  </div>
+</header>
+
+<nav class="tabs">
+  <a href="#decide">开局决策</a>
+  <a href="#core">主练阵容</a>
+  <a href="#cold">冷门备选</a>
+  <a href="#rhythm">运营节奏</a>
+  <a href="#rules">上分规则</a>
+  <a href="#log">复盘日志</a>
+</nav>
+
+<main>
+  <section id="decide">
+    <h2>开局决策</h2>
+    <p class="sub">主练两套，冷门留给胡牌局。开局 30 秒内按装备、来牌和海克斯定方向。</p>
+    <div class="grid decide">
+      <div class="card decide" data-target="comp-jingshen">
+        <h3>法装 + 三莲华 + 芸阿娜</h3>
+        <p>开局能凑 3 莲华且有芸阿娜打工，走 <strong>荆棘希维尔</strong>（8级D）。</p>
+      </div>
+      <div class="card decide" data-target="comp-yongsen">
+        <h3>攻速/大剑 + 能连胜</h3>
+        <p>物理装顺、经济好能稳血冲 9，走 <strong>永森95EZ</strong>。</p>
+      </div>
+      <div class="card decide" data-target="cold-snake">
+        <h3>好事成双 II + 独家</h3>
+        <p>拿到成双且没人抢，走 <strong>成双蛇女</strong>，上限很高。</p>
+      </div>
+      <div class="card decide" data-target="cold-nunu">
+        <h3>花仙转/铲子 + 小炮胡</h3>
+        <p>有仙灵转且小炮数量多，试 <strong>无限打钱小炮</strong>。</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="core">
+    <h2>主练阵容</h2>
+    <p class="sub">装备给错比阵容选错更伤。核心三件优先，多余装备再给副 C。</p>
+    <div class="grid comps">
+
+      <div class="card comp" id="comp-jingshen">
+        <h3>荆棘希维尔 <span class="grade s">S</span></h3>
+        <p class="meta">8级D卡 · 4费主C ｜ 3灵魂莲华 + 荆棘之兴 ｜ 冷门强势</p>
+        <div class="block">
+          <h4>定阵与核心</h4>
+          <ul class="tight">
+            <li>开局拿到三莲华，拥有芸阿娜即可启动；芸阿娜带希维尔装备打工。</li>
+            <li>常规成型：3 灵魂莲华 + 荆棘之兴；核心 希维尔(4)、艾希(5)、瑟提、约里克、婕拉。</li>
+            <li>献祭野兽变体：拆瑟提/约里克/婕拉，补迅捷蟹、绯红树怪、石甲虫，拉克丝选野兽羁绊。</li>
+            <li>阿尔法印记给石甲虫后献祭，开局全员加盾；墨菲特单顶当主坦。</li>
+          </ul>
+        </div>
+        <div class="block">
+          <h4>装备</h4>
+          <div class="chips">
+            <span class="chip item">希维尔：青龙刀 / 无尽 / 杀人剑</span>
+            <span class="chip item">神器：金币收集者 / 密银</span>
+            <span class="chip item">墨菲特：板甲 / 狂徒 / 冕卫</span>
+            <span class="chip item">艾希：青龙刀 / 红霸符 / 轻语</span>
+          </div>
+        </div>
+        <div class="block">
+          <h4>海克斯</h4>
+          <div class="chips">
+            <span class="chip hex">8级D干传说</span><span class="chip hex">大剑溢流</span>
+            <span class="chip hex">双城赢家</span><span class="chip hex">物尽其用</span>
+            <span class="chip hex">四费增援</span><span class="chip hex">后期专家</span>
+          </div>
+        </div>
+        <div class="block">
+          <h4>节奏</h4>
+          <ul class="tight">
+            <li>前期 3 莲华 + 芸阿娜打工，前排谁二星谁穿肉，不盲目 D。</li>
+            <li>平稳上 8 后大 D，找 2 星希维尔 + 体系全 2 星锁血。</li>
+            <li>有艾希就有吃鸡机会；艾希没来前基本单 C，输出容易不够。</li>
+            <li>野兽赐福选蛮熊斩杀，配合希维尔清残血。</li>
+          </ul>
+        </div>
+        <div class="evidence">
+          战绩依据：汐呱赛季第五天靠这套连吃两把；禾野称“版本冷门强势”；文文文献祭流“没啥同行、后期能偷3星4费”。三篇均发布于 8/25。
+        </div>
+        <div class="codebox">
+          <div class="row">
+            <code id="code-jingshen">#荆棘希维尔#MjIwMDEzMDM5OTczNTkxMDMxNzg3NTg2ODkwNjA4</code>
+            <button data-copy="code-jingshen" type="button">复制</button>
+          </div>
+          <div class="row">
+            <code id="code-helian">#黑莲希维尔#MjIwMDEzMDM5OTczNTkxMDMxNzg3NTk5NjEyNDU3</code>
+            <button data-copy="code-helian" type="button">复制</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card comp" id="comp-yongsen">
+        <h3>永森95EZ <span class="grade s">S</span></h3>
+        <p class="meta">永恒之森 · 九五 ｜ EZ 主C ｜ 9人口大成</p>
+        <div class="block">
+          <h4>阵容</h4>
+          <div class="chips">
+            <span class="chip unit">伊泽瑞尔</span><span class="chip unit">德莱文</span><span class="chip unit">茂凯</span>
+            <span class="chip unit">塔里克</span><span class="chip unit">阿木木</span><span class="chip unit">阿利斯塔</span>
+            <span class="chip unit">凯南</span><span class="chip unit">纳尔</span><span class="chip unit">艾翁</span>
+          </div>
+          <p style="margin:8px 0 0;font-size:13px;color:var(--muted);">有永森转/拉克丝可开 5 永森；2 地狱火提供重伤灼烧。</p>
+        </div>
+        <div class="block">
+          <h4>装备</h4>
+          <div class="chips">
+            <span class="chip item">EZ：蓝霸符 / 锐利之刃 / 轻语</span>
+            <span class="chip item">德莱文：羊刀 / 海妖 / 无尽</span>
+            <span class="chip item">大树：板甲 / 狂徒 / 誓约</span>
+            <span class="chip item">艾翁：回蓝装</span>
+          </div>
+        </div>
+        <div class="block">
+          <h4>海克斯</h4>
+          <div class="chips">
+            <span class="chip hex">上进心</span><span class="chip hex">耐心学习</span>
+            <span class="chip hex">对冲基金</span><span class="chip hex">升级咯</span><span class="chip hex">后期专家</span>
+          </div>
+        </div>
+        <div class="block">
+          <h4>节奏</h4>
+          <ul class="tight">
+            <li>前期用 3 永森 + 裁决（芸阿娜/索拉卡）过渡，能连胜才玩。</li>
+            <li>4-2 拉 8，开 5 永森用 EZ 划水；血量不够先 D 2 星 EZ 保血。</li>
+            <li>9 人口找齐 5 费大成；根据强化可 九五双转。</li>
+            <li>EZ 主 C 上限高，但大成前强度一般，别在低血量硬冲。</li>
+          </ul>
+        </div>
+        <div class="evidence">
+          战绩依据：兔铲铲称“大成九五也是55开，EZ九五超高上限”；金铲铲助手阵容库评级 S。
+        </div>
+        <div class="codebox">
+          <div class="row">
+            <code id="code-yongsen">#永森95-兔铲铲#MjIwMDIzMzI5ODY5MDk0NjMxNzg3MjM1MjU2MDg0</code>
+            <button data-copy="code-yongsen" type="button">复制</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="cold">
+    <h2>冷门备选阵容</h2>
+    <p class="sub">这三套都算信息差阵容，别当主练，胡牌或拿到关键海克斯再转。</p>
+    <div class="grid cold">
+
+      <div class="card comp" id="cold-beast">
+        <h3>84野兽莲华 <span class="grade a">A</span></h3>
+        <p class="meta">莲华 + 野兽 + 希维尔斩杀 ｜ 8级启动 · 9人口大成</p>
+        <div class="block">
+          <h4>阵容</h4>
+          <div class="chips">
+            <span class="chip unit">约里克</span><span class="chip unit">卡尔玛</span><span class="chip unit">蔚</span>
+            <span class="chip unit">阿狸</span><span class="chip unit">希维尔</span><span class="chip unit">瑟提</span>
+            <span class="chip unit">婕拉</span><span class="chip unit">艾希</span><span class="chip unit">纳尔</span>
+          </div>
+        </div>
+        <div class="block">
+          <h4>装备</h4>
+          <div class="chips">
+            <span class="chip item">阿狸：双纳什 / 法爆</span>
+            <span class="chip item">希维尔：青龙刀 / 无尽 / 轻语</span>
+            <span class="chip item">瑟提：狂徒 / 板甲 / 心之钢</span>
+          </div>
+        </div>
+        <div class="block">
+          <h4>关键</h4>
+          <ul class="tight">
+            <li>野兽赐福选蛮熊斩杀：希维尔斩杀低于 15% 血的敌人。</li>
+            <li>阿狸一套打残，希维尔收割，补足纯莲华阿狸缺后续伤害的短板。</li>
+            <li>血低 8 级大搜 2 星再上 9；血高划水上 9 找艾希。</li>
+          </ul>
+        </div>
+        <div class="evidence">依据：金铲铲小辉 8/22 攻略，称“冷门偷分、轻松偷上百分”。</div>
+      </div>
+
+      <div class="card comp" id="cold-snake">
+        <h3>成双蛇女 <span class="grade a">A</span></h3>
+        <p class="meta">好事成双 II 专属 ｜ 蛇女清后排 + 阿狸 ｜ 大师局验证</p>
+        <div class="block">
+          <h4>阵容</h4>
+          <div class="chips">
+            <span class="chip unit">卡西奥佩娅 x2</span><span class="chip unit">拉莫斯 x2</span>
+            <span class="chip unit">费德提克 x2</span><span class="chip unit">阿狸</span><span class="chip unit">拉露恩</span>
+          </div>
+          <p style="margin:8px 0 0;font-size:13px;color:var(--muted);">有裁决转才挂索拉卡；8 人口挂 4 法伤害更高。</p>
+        </div>
+        <div class="block">
+          <h4>装备</h4>
+          <div class="chips">
+            <span class="chip item">蛇女：青龙刀 / 法爆 / 法穿</span>
+            <span class="chip item">龙龟：石像鬼 / 狂徒 / 救赎</span>
+            <span class="chip item">稻草：放后排蹭助攻当副坦</span>
+          </div>
+        </div>
+        <div class="block">
+          <h4>关键</h4>
+          <ul class="tight">
+            <li>蛇女必须先秒后排，对面 C 位消失后前排随便处理。</li>
+            <li>主坦选龙龟不选稻草：龙龟 4 秒双抗更适合扛前排。</li>
+            <li>开局一定要确认独家，不是独家强度会掉一大截。</li>
+          </ul>
+        </div>
+        <div class="evidence">依据：兔子解说实战 70 局宗师，大师局靠成双蛇狂吃；突破大师晋级赛。</div>
+      </div>
+
+      <div class="card comp" id="cold-nunu">
+        <h3>无限打钱小炮 <span class="grade a">A</span></h3>
+        <p class="meta">3费赌狗 ｜ 骑努努打钱 ｜ 上限高 · 信息差</p>
+        <div class="block">
+          <h4>定位</h4>
+          <ul class="tight">
+            <li>冷门三费赌狗，后期一回合打十几块，声称稳定前二。</li>
+            <li>需要花仙转/铲子 + 小炮数量顺，胡了再玩。</li>
+            <li>目前公开攻略较少，先匹配练 2-3 局再进排位。</li>
+          </ul>
+        </div>
+        <div class="block">
+          <h4>装备方向</h4>
+          <div class="chips">
+            <span class="chip item">小炮：羊刀 / 科技枪 / 破甲</span>
+            <span class="chip item">前排：板甲 / 狂徒 / 振奋</span>
+          </div>
+        </div>
+        <div class="evidence">依据：金铲铲剑神 B 站视频（冷门三费赌狗），暂无公开胜率，按创作者说法“稳定前二”。</div>
+        <div class="codebox">
+          <div class="row">
+            <code id="code-nunu">#无限打钱小炮#MTEwMDA2OTQwMTExODEwODExNzg3Mjc4ODgxNjU0</code>
+            <button data-copy="code-nunu" type="button">复制</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="rhythm">
+    <h2>通用运营节奏</h2>
+    <p class="sub">无论玩哪套，先想清楚这局是连胜还是连败；4 阶段前两套主练阵容的分叉点不同。</p>
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr><th>节点</th><th>人口</th><th>要做的事</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1 阶段</td><td>3-4</td><td>野怪回合定主 C；留 3 莲华 / 3 野怪 / 3 永森 过渡牌。</td></tr>
+          <tr><td>2-1 ~ 2-5</td><td>4-5</td><td>荆棘希维尔用芸阿娜打工；永森95EZ 用霞/阿利斯塔过渡；小精灵优先经济。</td></tr>
+          <tr><td>3-2</td><td>6</td><td>成双蛇女开始 D 蛇女/龙龟/稻草；主练两套继续划水吃利息。</td></tr>
+          <tr><td>3-5 / 3-7</td><td>7</td><td>赌狗（小炮/蛇女）启动大 D；运营阵容看血量决定是否小 D 保血。</td></tr>
+          <tr><td>4-2</td><td>8</td><td>荆棘希维尔、永森95EZ 启动，D 2 星 4 费核心；小精灵改拿 D 牌或战力。</td></tr>
+          <tr><td>4-5 / 5-1</td><td>8-9</td><td>锁血后上 9 或追三星；有“四费增援”可偷 3 星 4 费。</td></tr>
+          <tr><td>5 阶段后</td><td>9+</td><td>决赛圈每回合对位；防别人 4 费三星；先保前四再想吃鸡。</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="rules">
+    <h2>上分规则</h2>
+    <p class="sub">上分靠的是纪律，不是灵光一现。</p>
+    <div class="rules">
+      <div class="rule">10 局内只练两套：荆棘希维尔 + 永森95EZ；冷门阵容只在胡牌时用。</div>
+      <div class="rule">看前四率，不看单局吃鸡。前四率稳定在 55% 以上再追求吃鸡率。</div>
+      <div class="rule">连败 2 局就休息 10 分钟；一天掉超过 100 LP 立刻复盘停手。</div>
+      <div class="rule">同行超过 2 家立即换启动时间或转阵，别硬抢同一个 4 费。</div>
+      <div class="rule">血量低于 30 且阵容未成型时，全部金币 D 牌保分，不留经济。</div>
+      <div class="rule">每局只记 1 条最大失误；第二天开游戏前先看昨天的复盘。</div>
+    </div>
+  </section>
+
+  <section id="log">
+    <h2>复盘日志</h2>
+    <p class="sub">打完一局顺手记一行，数据会存在本地浏览器里，不会上传。</p>
+    <div class="card">
+      <form id="logform">
+        <div class="formgrid">
+          <div class="field">
+            <label for="f-date">日期</label>
+            <input id="f-date" type="date" required>
+          </div>
+          <div class="field">
+            <label for="f-comp">阵容</label>
+            <select id="f-comp" required>
+              <option value="荆棘希维尔">荆棘希维尔</option>
+              <option value="永森95EZ">永森95EZ</option>
+              <option value="84野兽莲华">84野兽莲华</option>
+              <option value="成双蛇女">成双蛇女</option>
+              <option value="无限打钱小炮">无限打钱小炮</option>
+              <option value="其他">其他</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-rank">名次</label>
+            <select id="f-rank" required>
+              <option value="1">1</option><option value="2">2</option><option value="3">3</option>
+              <option value="4">4</option><option value="5">5</option><option value="6">6</option>
+              <option value="7">7</option><option value="8">8</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-hp">剩余血量</label>
+            <input id="f-hp" type="number" min="0" max="100" placeholder="例如 42">
+          </div>
+          <div class="field">
+            <label for="f-open">开局</label>
+            <select id="f-open">
+              <option value="正常">正常</option>
+              <option value="连胜">连胜</option>
+              <option value="连败">连败</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-hex">关键海克斯</label>
+            <input id="f-hex" placeholder="四费增援 / 好事成双 II">
+          </div>
+          <div class="field full">
+            <label for="f-mistake">最大失误</label>
+            <textarea id="f-mistake" placeholder="例如：8级D过头没留利息；或艾希没来还硬冲9"></textarea>
+          </div>
+          <div class="field full">
+            <label for="f-note">备注</label>
+            <textarea id="f-note" placeholder="可留同行数量、阵容码、下一局要改的点"></textarea>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="primary" type="submit">记录这局</button>
+          <button type="button" id="btn-export">复制统计</button>
+          <button class="danger" type="button" id="btn-clear">清空日志</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="stats" id="stats"></div>
+    <div id="loglist"></div>
+  </section>
+</main>
+
+<footer>
+  <p>数据来源：金铲铲禾野一图流、汐呱、金铲铲文文文、金铲铲小辉、兔顶之弈、兔铲铲之战、金铲铲剑神（B站）等公开攻略，整理于 2026-08-25。阵容码来自原作者，导入后请以游戏内实际版本为准。</p>
+</footer>
+
+<script>
+  const LS_KEY = 's18-log-v2';
+
+  function loadLog() {
+    try {
+      return JSON.parse(localStorage.getItem(LS_KEY) || '[]');
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function saveLog(list) {
+    localStorage.setItem(LS_KEY, JSON.stringify(list));
+  }
+
+  function esc(s) {
+    return String(s || '').replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function copyFallback(text, btn, done) {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); done(); } catch (e) { prompt('手动复制：', text); }
+    document.body.removeChild(ta);
+  }
+
+  function bindCopy(btn) {
+    btn.addEventListener('click', function () {
+      const id = btn.dataset.copy;
+      const text = document.getElementById(id).textContent.trim();
+      const done = function () {
+        btn.textContent = '已复制';
+        setTimeout(function () { btn.textContent = '复制'; }, 1500);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done).catch(function () { copyFallback(text, btn, done); });
+      } else {
+        copyFallback(text, btn, done);
+      }
+    });
+  }
+
+  function render() {
+    const list = loadLog();
+    const count = list.length;
+    const top4 = list.filter(r => r.rank <= 4).length;
+    const wins = list.filter(r => r.rank === 1).length;
+    const avg = count ? (list.reduce((s, r) => s + r.rank, 0) / count).toFixed(2) : '--';
+    document.getElementById('stats').innerHTML =
+      '<div class="stat"><b>' + count + '</b><span>总场次</span></div>' +
+      '<div class="stat"><b>' + (count ? Math.round(top4 / count * 100) : 0) + '%</b><span>前四率</span></div>' +
+      '<div class="stat"><b>' + avg + '</b><span>平均名次</span></div>' +
+      '<div class="stat"><b>' + wins + '</b><span>吃鸡</span></div>';
+
+    const box = document.getElementById('loglist');
+    if (!count) {
+      box.innerHTML = '<p class="empty">还没有记录。打完一局就来记一条。</p>';
+      return;
+    }
+    const sorted = list.slice().reverse();
+    box.innerHTML = sorted.map((r, i) => {
+      const idx = list.length - 1 - i;
+      const cls = r.rank <= 2 ? 'rank-top' : r.rank <= 4 ? 'rank-mid' : 'rank-low';
+      return '<div class="logitem" data-idx="' + idx + '">' +
+        '<div class="main">' +
+          '<div class="title">' + esc(r.date) + ' · ' + esc(r.comp) +
+            ' <span class="badge-rank ' + cls + '">第 ' + r.rank + ' 名</span></div>' +
+          '<div class="detail">开局：' + esc(r.open) +
+            (r.hp ? ' · 剩余血量：' + esc(r.hp) : '') +
+            (r.hex ? ' · 海克斯：' + esc(r.hex) : '') + '</div>' +
+          (r.mistake ? '<div class="detail">失误：' + esc(r.mistake) + '</div>' : '') +
+          (r.note ? '<div class="detail">备注：' + esc(r.note) + '</div>' : '') +
+        '</div>' +
+        '<button type="button" data-del="' + idx + '" class="danger">删除</button>' +
+      '</div>';
+    }).join('');
+  }
+
+  document.getElementById('logform').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const list = loadLog();
+    list.push({
+      date: document.getElementById('f-date').value,
+      comp: document.getElementById('f-comp').value,
+      rank: Number(document.getElementById('f-rank').value),
+      hp: document.getElementById('f-hp').value,
+      open: document.getElementById('f-open').value,
+      hex: document.getElementById('f-hex').value,
+      mistake: document.getElementById('f-mistake').value,
+      note: document.getElementById('f-note').value
+    });
+    saveLog(list);
+    this.reset();
+    document.getElementById('f-date').value = new Date().toISOString().slice(0, 10);
+    render();
+  });
+
+  document.getElementById('loglist').addEventListener('click', function (e) {
+    const btn = e.target.closest('[data-del]');
+    if (!btn) return;
+    const list = loadLog();
+    list.splice(Number(btn.dataset.del), 1);
+    saveLog(list);
+    render();
+  });
+
+  document.getElementById('btn-clear').addEventListener('click', function () {
+    if (confirm('确认清空全部复盘记录？')) {
+      localStorage.removeItem(LS_KEY);
+      render();
+    }
+  });
+
+  document.getElementById('btn-export').addEventListener('click', function () {
+    const list = loadLog();
+    if (!list.length) { alert('还没有记录。'); return; }
+    const top4 = list.filter(r => r.rank <= 4).length;
+    const wins = list.filter(r => r.rank === 1).length;
+    const avg = (list.reduce((s, r) => s + r.rank, 0) / list.length).toFixed(2);
+    const text = 'S18 复盘统计：' + list.length + ' 局，前四率 ' + Math.round(top4 / list.length * 100) +
+      '%，平均名次 ' + avg + '，吃鸡 ' + wins + ' 局。';
+    const done = function () { alert('统计已复制。'); };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done).catch(function () { prompt('复制这段统计：', text); });
+    } else {
+      prompt('复制这段统计：', text);
+    }
+  });
+
+  document.querySelectorAll('[data-copy]').forEach(bindCopy);
+
+  document.querySelectorAll('.card.decide').forEach(function (card) {
+    card.addEventListener('click', function () {
+      const target = card.dataset.target;
+      const el = document.getElementById(target);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  document.getElementById('f-date').value = new Date().toISOString().slice(0, 10);
+  render();
+</script>
+</body>
+</html>
